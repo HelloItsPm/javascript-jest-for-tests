@@ -1,31 +1,37 @@
-/* EXAMPLE OF AN API REQUEST */
-
-/*
-let longitude = 44.83; // Bordeaux longitude
-let latitude = -0.57; // Bordeaux latitude
-let api_key = '891fcaaa0f613df11046ed15bd1a4607'; // Teacher's API Key
-let api_url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${api_key}`; // API URL
-
-const getWeather = () => {
-  axios.get(api_url)
-  .then((response)=>console.log(response.data.main.temp - 273.15))
-  .catch((err)=> console.log(err))
-}
-getWeather();
-*/
-
-
-
+// ex4.js
 
 export const fetchData = async () => {
-    // Your code here: Implement an API request (e.g., fetch data from a fictional API).
-  };
-  
-  // script.js
-  import { fetchData } from './ex4';
-  
-  function displayData() {
-    // Your code here: Fetch and display data from the API using fetchData.
+  let latitude = 48.1173; // La latitude de Rennes
+  let longitude = -1.6778; // La longitude de Rennes
+  let api_key = '891fcaaa0f613df11046ed15bd1a4607'; // Clé API
+  let api_url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${api_key}`;
+
+  try {
+    const response = await fetch(api_url);
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
+    }
+    const data = await response.json();
+    const tempCelsius = data.main.temp - 273.15;
+    return tempCelsius;
+  } catch (err) {
+    console.error('Error fetching data:', err);
+    return null;
   }
-  
-  document.addEventListener('DOMContentLoaded', displayData);
+};
+
+export async function displayData() {
+  const tempCelsius = await fetchData();
+  if (tempCelsius !== null) {
+    document.getElementById('paragraph').textContent = `Temperature: ${tempCelsius.toFixed(2)}°C`;
+  } else {
+    document.getElementById('paragraph').textContent = 'Error fetching data';
+  }
+}
+
+export function removeParagraphContent() {
+  document.getElementById('paragraph').textContent = '';
+}
+
+document.addEventListener('DOMContentLoaded', displayData);
+// removeParagraphButton.addEventListener('click', removeParagraphContent);
