@@ -10,7 +10,6 @@
     "test": "jest --watch"
   },
   "jest": {
-    "testEnvironment": "jsdom",
     "collectCoverage": true,
     "coverageReporters": [
       "html"
@@ -50,6 +49,8 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
-    "lodash": "^4.17.21"
+    "json": "^11.0.0",
+    "lodash": "^4.17.21",
+    "util": "^0.12.5"
   }
 }
